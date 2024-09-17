@@ -1,0 +1,25 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "This is my learning Project in Namaste nodeJS course",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Node",
+    "JS",
+    "Chandrashekhar",
+    "Dev",
+    "Tinder",
+    "devTinder"
+  ],
+  "author": "Chandra Shekhar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "nodemon": "^3.1.4"
+  }
+}
