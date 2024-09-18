@@ -11,3 +11,9 @@
 - What is the use of "-g" while npm install
 - Difference between caret and tilde (^ vs ~)
   -----All Homework done-----
+
+# Episode 4 homework
+
+- Install Postman and make a test api call
+- Write logic to handle GET, POST, PATCH, DELETE API calls and test on postman
+  -----Done----
