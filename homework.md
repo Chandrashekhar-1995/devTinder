@@ -16,4 +16,8 @@
 
 - Install Postman and make a test api call
 - Write logic to handle GET, POST, PATCH, DELETE API calls and test on postman
+- Explore riuting and use of ?, +, (), \* in the routes
+- Use of ragex in routes /a/, /.\*fly$/
+- Reading the query params in the routes
+- Reading the dynamic routes routes
   -----Done----
