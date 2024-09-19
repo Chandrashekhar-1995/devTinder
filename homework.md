@@ -28,3 +28,8 @@
 - next()
 - next function and errors along with the code res.send()
 - napp.use("/user", rH1, rH2, rH3, rH4, rH5);
+- what is middleware
+- how express JS besically handles requests behind the scenes
+- Diffrece between app.use() and app.all()
+- Write a dummy auth middleware for admin
+- Write a dummy auth middleware for users except /user/login

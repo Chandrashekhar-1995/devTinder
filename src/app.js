@@ -1,39 +1,24 @@
 const express = require("express");
+const { adminAuth, userAuth } = require("./middleware/auth");
 
 const app = express();
 
+app.use("/admin/getAllData", adminAuth, (req, res) => {
+    
+    res.send("All data send")
+});
 
-app.use("/user", (req, res, next) => {
-    console.log("1st response");
-        next();
-    // res.send("1st response");
-},
-    (req, res, next) => {
-        console.log("Second response");
-        next();
-        // res.send("Second response");
-        
-    }, 
-    [(req, res, next) => {
-        console.log("3rd response");
-        next();
-        // res.send("3rd response");
-        
-    }, 
-    (req, res, next) => {
-        console.log("4th response");
-        next();
-        res.send("4th response");
-        
-    }], 
-    (req, res, next) => {
-        console.log("5th response");
-        // res.send("5th response");
-        // next();
-        
-    }, 
-)
+app.get("/user/login", (req, res) => {
+    
+    res.send("User login successfull")
+});
+
+
+app.get("/user/getAllData", userAuth, (req, res) => {
+    
+    res.send("User releted all data send")
+});
 
 app.listen(7777, () => {
     console.log("Server is running successfull on port 7777");
-});
+});  
