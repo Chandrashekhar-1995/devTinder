@@ -22,7 +22,7 @@
 - Reading the dynamic routes routes
   -----Done----
 
-# Episode 4 homework
+# Episode 5 homework
 
 - Multipal routes handlers - play with code
 - next()
@@ -35,3 +35,10 @@
 - Write a dummy auth middleware for users except /user/login
 - Error handling using app.use("/", (err, req, res, next)=>{})
   -------done------
+
+# Episode 6 homework
+
+- Creat a free cluster
+- install mongoose libreary
+- Connect your application to the database/devtinder
+- Call tha connectBD function and connect to database before starting application on 7777

@@ -1,31 +1,17 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
 const app = express();
 
 
-app.get("/getUserData", (req, res) => {
-    try {
-            // logic to db call and get user data
-    throw new err("SDFGHF");
+connectDB()
+    .then(() => {
+        console.log("Data base connection successfully stablished");
+        app.listen(7777, () => {
+            console.log("Server is running successfull on port 7777");
+        });  
+    })
+    .catch((err) => {
+        console.error("Database cannot be connected !!", err);
+    
+    });
 
-    res.send("User data send")
-    } catch (err) {
-        res.status(501).send("Some error occured please contact support ")
-    }
-
-});
-
-
-
-
-
-app.use("/", (err, req, res, next) => {
-    if (err) {
-        res.status(501).send("Something went wrong")
-    }
-});
-
-
-app.listen(7777, () => {
-    console.log("Server is running successfull on port 7777");
-});  
