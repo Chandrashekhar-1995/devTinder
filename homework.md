@@ -21,3 +21,10 @@
 - Reading the query params in the routes
 - Reading the dynamic routes routes
   -----Done----
+
+# Episode 4 homework
+
+- Multipal routes handlers - play with code
+- next()
+- next function and errors along with the code res.send()
+- napp.use("/user", rH1, rH2, rH3, rH4, rH5);
