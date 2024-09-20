@@ -45,3 +45,9 @@
 - Create a User schema and user model
 - Create a POST /signup API to add data to database
 - Push some document using API calls from postman
+
+# Episode 6 homework
+
+- What is diffrence between json object and javascript object
+- Add the express.json middleware to your app
+- Make your signup Api dynamic to recive data from the end user

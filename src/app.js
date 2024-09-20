@@ -4,29 +4,16 @@ const app = express();
 const User = require("./models/user.model");
 
 
-// const userObj = {
-//     firstName: "Chandra",
-//     lastName: "Shekhar",
-//     email: "Chandra@gmail.com",
-//     password: "Abc123@",
-//     age: "28",
-//     gender: "Male"
-// }
-
+app.use(express.json());
 
 app.post("/signup", async (req, res) => {
-    // creating an  new stansil for user
 
-    const user = new User({
-        firstName: "Sanjay",
-        lastName: "Singh",
-        email: "Sanjay@gmail.com",
-        password: "Sanjay123@",
-    });
+    // creating an  new stansil for user
+    const user = new User(req.body);
 
     try {
     await user.save()
-        res.send("Signup successfully");
+        res.send("User created successfully");
         
     } catch (err) {
         res.status(400).send("error while saving user: ", err.message);
