@@ -43,3 +43,5 @@
 - Connect your application to the database/devtinder
 - Call tha connectBD function and connect to database before starting application on 7777
 - Create a User schema and user model
+- Create a POST /signup API to add data to database
+- Push some document using API calls from postman
