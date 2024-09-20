@@ -51,3 +51,7 @@
 - What is diffrence between json object and javascript object
 - Add the express.json middleware to your app
 - Make your signup Api dynamic to recive data from the end user
+- Users.findOne with duplicate emai ids, whitch object returned
+- API - get user by email
+- API - Feed Api - GETY /feed - get all users from database
+- Create a API to get user by id
