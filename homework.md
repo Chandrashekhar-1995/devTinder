@@ -45,6 +45,7 @@
 - Create a User schema and user model
 - Create a POST /signup API to add data to database
 - Push some document using API calls from postman
+  --------dane-------
 
 # Episode 6 homework
 
@@ -61,3 +62,4 @@
 - Explore mongoose docs specilly Model methods
 - What are options in a model.findOneAndUpdate method explore more about it
 - API - Update the user with email ID
+  ----- done-----
