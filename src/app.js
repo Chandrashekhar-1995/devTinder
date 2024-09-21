@@ -62,6 +62,17 @@ app.get("/user/feed", async (req, res) => {
     } catch (err) {
         res.status(400).send("Something went wrong, whene finding the users in database", err.message)
     }
+});
+
+app.delete("/user", async (req, res) => {
+    const userId = req.body._id
+    try {
+        const user = await User.findByIdAndDelete(userId);
+        res.send("User deleted successfully");  
+    } catch (err) {
+        res.status(500).send("Something went wrong, whene deleting user", err.message)
+    }
+    
 })
 
 
