@@ -47,7 +47,7 @@
 - Push some document using API calls from postman
   --------dane-------
 
-# Episode 6 homework
+# Episode 7 homework
 
 - What is diffrence between json object and javascript object
 - Add the express.json middleware to your app
@@ -64,7 +64,7 @@
 - API - Update the user with email ID
   ----- done-----
 
-# Episode 7 homework
+# Episode 8 homework
 
 - Explorer all schematypes from the documentation
 - Add required, unique, lowercase, min, minLength, trim,
@@ -72,3 +72,5 @@
 - Create a custom validate function for gender
 - Improve the DB schema - PUT all appropiate validations on each fieldin schema
 - Add timestamp to the userSchema
+- Add API Level validation on Patch request & Signup post api
+- DATA Sanitization - Add API validations for each field

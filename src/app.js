@@ -12,6 +12,13 @@ app.post("/signup", async (req, res) => {
     const user = new User(req.body);
 
     try {
+        if (user?.skills.length > 10) {
+            throw new Error("Skills cannot be more than 10");
+        }
+        if (data?.about.length > 256) {
+            throw new Error("About length cannot be more than 256");
+        }
+
     await user.save()
         res.send("User created successfully");
         
@@ -79,8 +86,20 @@ app.patch("/user/update", async (req, res) => {
     const userId = req.body._id;
     const data = req.body;    
     try {
-        const user = await User.findByIdAndUpdate(userId, data, { returnDocument: 'after', runValidators:true});
-        console.log(user);        
+        const UPDATE_ALLOWED = ["password", "skills", "about", "photoUrl"];
+        const isDataAllowed = Object.keys(data).every((k) => UPDATE_ALLOWED.includes(k));
+
+        if (!isDataAllowed) {
+            throw new Error("Upadte not allowed");
+        }
+        if (data?.skills.length > 1) {
+            throw new Error("Skills cannot be more than 10");
+        }
+        if (data?.about.length > 256) {
+            throw new Error("About length cannot be more than 256");
+        }
+        
+        const user = await User.findByIdAndUpdate(userId, data, { returnDocument: 'after', runValidators:true});   
         res.send("User update sucessfully");
     } catch (err) {
         res.status(500).send("Something went wrong, whene updating user " + err.message)
