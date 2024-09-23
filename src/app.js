@@ -3,39 +3,42 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user.model");
 const { validateSignupData } = require("./helper/auth");
+const bcrypt = require("bcrypt");
 
 
 app.use(express.json());
 
 app.post("/signup", async (req, res) => {
 
+    const { firstName, lastName, emailId, password } = req.body;
     // creating an  new stansil for user
-    const user = new User(req.body);
     
     try {
         validateSignupData(req);
-        
-        if (user?.skills.length > 10) {
-            throw new Error("Skills cannot be more than 10");
-        }
-        if (user?.about.length > 256) {
-            throw new Error("About length cannot be more than 256");
-        }
+
+        const hashPassword = await bcrypt.hash(password, 10) 
+
+        const user = new User({
+            firstName,
+            lastName,
+            emailId,
+            password: hashPassword
+        });
 
     await user.save()
         res.send("User created successfully");
         
     } catch (err) {
-        res.status(400).send("Error : " + err.message);
+        res.status(400).send("Error : " + err);
     }
 
 });
 
 app.get("/user", async (req, res) => {
-    const userEmail = req.body.email;
+    const userEmail = req.body.emailId;
     
     try {
-        const user = await User.find({ email: userEmail })
+        const user = await User.find({ emailId: userEmail })
         
         if (user.length === 0) {
             res.status(404).send("User not found")
@@ -48,9 +51,9 @@ app.get("/user", async (req, res) => {
 });
 
 app.get("/user/first", async (req, res) => {
-    const userEmail = req.body.email;
+    const userEmail = req.body.emailId;
     try {
-        const user = await User.findOne({ email: userEmail })
+        const user = await User.findOne({ emailId: userEmail })
         if (!user) {
             res.status(404).send("User not found");
         } else {

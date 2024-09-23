@@ -77,3 +77,9 @@
 - Explorer the validator functions libreary
 - Use validator function for password, email and photo URl
 - Never trust req.body
+
+# Episode 9 homework
+
+- Val;idate data in signup API
+- Install bcrypt package
+- Create PasswordHash using bcrypt.hash & save the user is encrupted password
