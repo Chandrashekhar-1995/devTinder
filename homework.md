@@ -54,7 +54,7 @@
 - Make your signup Api dynamic to recive data from the end user
 - Users.findOne with duplicate emai ids, whitch object returned
 - API - get user by email
-- API - Feed Api - GETY /feed - get all users from database
+- API - Feed Api - GET/feed - get all users from database
 - Create a API to get user by id
 - Create a delete API
 - Diffrence between PATCH and PUT
@@ -70,7 +70,7 @@
 - Add required, unique, lowercase, min, minLength, trim,
 - add default value
 - Create a custom validate function for gender
-- Improve the DB schema - PUT all appropiate validations on each fieldin schema
+- Improve the DB schema - PUT all appropiate validations on each field in schema
 - Add timestamp to the userSchema
 - Add API Level validation on Patch request & Signup post api
 - DATA Sanitization - Add API validations for each field

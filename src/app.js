@@ -2,6 +2,7 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user.model");
+const { validateSignupData } = require("./helper/auth");
 
 
 app.use(express.json());
@@ -10,12 +11,14 @@ app.post("/signup", async (req, res) => {
 
     // creating an  new stansil for user
     const user = new User(req.body);
-
+    
     try {
+        validateSignupData(req);
+        
         if (user?.skills.length > 10) {
             throw new Error("Skills cannot be more than 10");
         }
-        if (data?.about.length > 256) {
+        if (user?.about.length > 256) {
             throw new Error("About length cannot be more than 256");
         }
 
@@ -23,7 +26,7 @@ app.post("/signup", async (req, res) => {
         res.send("User created successfully");
         
     } catch (err) {
-        res.status(400).send("error while saving user: " + err.message);
+        res.status(400).send("Error : " + err.message);
     }
 
 });
