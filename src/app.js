@@ -4,9 +4,12 @@ const app = express();
 const User = require("./models/user.model");
 const { validateSignupData } = require("./helper/auth");
 const bcrypt = require("bcrypt");
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken');
 
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
 
@@ -25,7 +28,11 @@ app.post("/signup", async (req, res) => {
             password: hashPassword
         });
 
-    await user.save()
+        await user.save()
+        
+        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@");
+
+        res.cookie("token ", jwtToken);
         res.send("User created successfully");
         
     } catch (err) {
@@ -36,22 +43,34 @@ app.post("/signup", async (req, res) => {
 
 app.get("/login", async (req, res) => {
     const { emailId, password } = req.body;
+    const { token } = req.cookies;
 
-    // check email in db
-    const user = await User.findOne({ emailId: emailId });
+    try {
+        // check email in db
+        const user = await User.findOne({ emailId: emailId });
     
-    if (!user) {
-        throw new Error("Invalid credentials Email")
+        if (!user) {
+            throw new Error("Invalid credentials")
+        }
+
+        //compare password
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            throw new Error("Invalid credentials");
+        }
+        
+        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@");
+
+        const decodedMessage = jwt.verify(token, "MybestFriend123123@");        
+        
+        res.cookie("token ", jwtToken)
+        res.send("login successfully")
+        
+    } catch (err) {
+        res.status(400).send("Error : " + err);
     }
 
-    //compare password
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-    if (!isPasswordCorrect) {
-        throw new Error("Invalid credentials Email");
-    }
-
-    res.send("login successfully");
-})
+});
 
 app.get("/user", async (req, res) => {
     const userEmail = req.body.emailId;
