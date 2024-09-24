@@ -43,8 +43,7 @@ app.post("/signup", async (req, res) => {
 
 app.get("/login", async (req, res) => {
     const { emailId, password } = req.body;
-    const { token } = req.cookies;
-
+ 
     try {
         // check email in db
         const user = await User.findOne({ emailId: emailId });
@@ -60,8 +59,6 @@ app.get("/login", async (req, res) => {
         }
         
         const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@");
-
-        const decodedMessage = jwt.verify(token, "MybestFriend123123@");        
         
         res.cookie("token ", jwtToken)
         res.send("login successfully")
@@ -71,6 +68,18 @@ app.get("/login", async (req, res) => {
     }
 
 });
+
+app.get("/profile", async(req, res) => {
+    const { token } = req.cookies;
+    try {
+        const decodedMessage = jwt.verify(token, "MybestFriend123123@");
+        const userId = decodedMessage._id;
+        const user = await User.findOne({_id:userId});
+        res.send(user)
+    } catch (err) {
+        res.send("Error: "+ err);
+    }
+})
 
 app.get("/user", async (req, res) => {
     const userEmail = req.body.emailId;
