@@ -6,6 +6,7 @@ const { validateSignupData } = require("./helper/auth");
 const bcrypt = require("bcrypt");
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken');
+const userAuth = require("./middleware/auth");
 
 
 app.use(express.json());
@@ -58,7 +59,7 @@ app.get("/login", async (req, res) => {
             throw new Error("Invalid credentials");
         }
         
-        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@");
+        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@", {expiresIn: "7d"});
         
         res.cookie("token ", jwtToken)
         res.send("login successfully")
@@ -69,15 +70,26 @@ app.get("/login", async (req, res) => {
 
 });
 
-app.get("/profile", async(req, res) => {
+app.get("/profile", async (req, res) => {
     const { token } = req.cookies;
     try {
         const decodedMessage = jwt.verify(token, "MybestFriend123123@");
         const userId = decodedMessage._id;
-        const user = await User.findOne({_id:userId});
+        const user = await User.findOne({ _id: userId });
         res.send(user)
     } catch (err) {
-        res.send("Error: "+ err);
+        res.send("Error: " + err);
+    }
+});
+
+app.post("/sendConnectionRequest", userAuth, async(req, res) => {
+
+    try {
+        const user = req.user;
+        res.send( user.firstName + " sending a connection request");
+        res.send(" sending a connection request");
+    } catch (err) {
+        res.status(400).send("Error : " + err.message);
     }
 })
 

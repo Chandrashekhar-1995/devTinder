@@ -83,3 +83,15 @@
 - Val;idate data in signup API
 - Install bcrypt package
 - Create PasswordHash using bcrypt.hash & save the user is encrupted password
+
+# Episode 9 homework
+
+- Install cookie-parser
+- just send a dummy cookie to user
+- create GET / profile API and check if you get the cookie back
+- Install jsonwebtoken
+- in login API, create a JWT token, sent it to user in cookie
+- read the cookies inside your profile API and find the logged in user details
+- userAuth middleware
+- Add the userAuth middleware in profile API and a new sendConnectionRequest API
+- Set the expiry of JWT token and cookies in 7 day
