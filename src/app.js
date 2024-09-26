@@ -5,7 +5,6 @@ const User = require("./models/user.model");
 const { validateSignupData } = require("./helper/auth");
 const bcrypt = require("bcrypt");
 const cookieParser = require('cookie-parser')
-const jwt = require('jsonwebtoken');
 const userAuth = require("./middleware/auth");
 
 
@@ -31,7 +30,7 @@ app.post("/signup", async (req, res) => {
 
         await user.save()
         
-        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@");
+        const jwtToken = user.getJWT;
 
         res.cookie("token ", jwtToken);
         res.send("User created successfully");
@@ -59,7 +58,7 @@ app.get("/login", async (req, res) => {
             throw new Error("Invalid credentials");
         }
         
-        const jwtToken = await jwt.sign({ _id: user._id }, "MybestFriend123123@", {expiresIn: "7d"});
+        const jwtToken = user.getJWT;
         
         res.cookie("token ", jwtToken)
         res.send("login successfully")
