@@ -53,7 +53,9 @@ app.get("/login", async (req, res) => {
         }
 
         //compare password
-        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        
+        const isPasswordCorrect = await user.validatePassword(password);
+        
         if (!isPasswordCorrect) {
             throw new Error("Invalid credentials");
         }
@@ -66,7 +68,7 @@ app.get("/login", async (req, res) => {
     } catch (err) {
         res.status(400).send("Error : " + err);
     }
-
+    
 });
 
 app.get("/profile", async (req, res) => {
@@ -82,7 +84,7 @@ app.get("/profile", async (req, res) => {
 });
 
 app.post("/sendConnectionRequest", userAuth, async(req, res) => {
-
+    
     try {
         const user = req.user;
         res.send( user.firstName + " sending a connection request");
@@ -152,7 +154,7 @@ app.patch("/user/update", async (req, res) => {
     try {
         const UPDATE_ALLOWED = ["password", "skills", "about", "photoUrl"];
         const isDataAllowed = Object.keys(data).every((k) => UPDATE_ALLOWED.includes(k));
-
+        
         if (!isDataAllowed) {
             throw new Error("Upadte not allowed");
         }
@@ -171,14 +173,15 @@ app.patch("/user/update", async (req, res) => {
 })
 
 connectDB()
-    .then(() => {
-        console.log("Data base connection successfully stablished");
-        app.listen(7777, () => {
-            console.log("Server is running successfull on port 7777");
-        });  
-    })
-    .catch((err) => {
-        console.error("Database cannot be connected !!", err);
+.then(() => {
+    console.log("Data base connection successfully stablished");
+    app.listen(7777, () => {
+        console.log("Server is running successfull on port 7777");
+    });  
+})
+.catch((err) => {
+    console.error("Database cannot be connected !!", err);
     
-    });
+});
 
+// const isPasswordCorrect = await bcrypt.compare(password, user.password);
