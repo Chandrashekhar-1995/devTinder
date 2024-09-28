@@ -6,6 +6,7 @@ const { validateSignupData } = require("./helper/auth");
 const bcrypt = require("bcrypt");
 const cookieParser = require('cookie-parser')
 const userAuth = require("./middleware/auth");
+const jwt = require("jsonwebtoken");
 
 
 app.use(express.json());
@@ -41,45 +42,47 @@ app.post("/signup", async (req, res) => {
 
 });
 
+
 app.get("/login", async (req, res) => {
     const { emailId, password } = req.body;
- 
+
     try {
-        // check email in db
+        // Check email in db
         const user = await User.findOne({ emailId: emailId });
-    
+
         if (!user) {
-            throw new Error("Invalid credentials")
+            throw new Error("Invalid credentials");
         }
 
-        //compare password
-        
+        // Compare password using the schema method
         const isPasswordCorrect = await user.validatePassword(password);
-        
+
         if (!isPasswordCorrect) {
             throw new Error("Invalid credentials");
         }
-        
-        const jwtToken = user.getJWT;
-        
-        res.cookie("token ", jwtToken)
-        res.send("login successfully")
-        
+
+        // Generate JWT token using user method
+        const jwtToken = user.getJWT();
+
+        res.cookie("token", jwtToken);
+        res.send("Login successfully");
+
     } catch (err) {
-        res.status(400).send("Error : " + err);
+        res.status(400).send("Error: " + err.message);
     }
-    
 });
+
 
 app.get("/profile", async (req, res) => {
     const { token } = req.cookies;
+    
     try {
         const decodedMessage = jwt.verify(token, "MybestFriend123123@");
         const userId = decodedMessage._id;
         const user = await User.findOne({ _id: userId });
         res.send(user)
     } catch (err) {
-        res.send("Error: " + err);
+        res.send("Please login again!!                  Error: " + err);
     }
 });
 
@@ -183,5 +186,3 @@ connectDB()
     console.error("Database cannot be connected !!", err);
     
 });
-
-// const isPasswordCorrect = await bcrypt.compare(password, user.password);
