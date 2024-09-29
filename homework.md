@@ -97,3 +97,17 @@
 - Set the expiry of JWT token and cookies in 7 day
 - Create a userSchema method to getJWT()
 - Create a userSchema method to comparepassword(password)
+
+# Episode 11 homework
+
+- Explore tinder APIs
+- Create a list of all APIs you can think of in dev Tinder
+- Group multipal routes under repective routers
+- Read documentation foe express.Router
+- Create routes folder for managing auth, profile request routers
+- Create authRouter , profileRouter, requestRouter
+- Import these routers in app.js
+- Create POST /logout API
+- Create PATCH /profile/edit API
+- Create PATCH /profile/password API => forgate password API
+- Make you validate all data in every POST, PATCH APIs
