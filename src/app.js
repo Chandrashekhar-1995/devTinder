@@ -2,75 +2,18 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user.model");
-const { validateSignupData } = require("./helper/auth");
-const bcrypt = require("bcrypt");
 const cookieParser = require('cookie-parser')
-const userAuth = require("./middleware/auth");
 const jwt = require("jsonwebtoken");
+const authRouter = require("./routes/auth");
+const userAuth = require("./middleware/auth");
 
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.post("/signup", async (req, res) => {
-
-    const { firstName, lastName, emailId, password } = req.body;
-    // creating an  new stansil for user
-    
-    try {
-        validateSignupData(req);
-
-        const hashPassword = await bcrypt.hash(password, 10) 
-
-        const user = new User({
-            firstName,
-            lastName,
-            emailId,
-            password: hashPassword
-        });
-
-        await user.save()
-        
-        const jwtToken = user.getJWT;
-
-        res.cookie("token ", jwtToken);
-        res.send("User created successfully");
-        
-    } catch (err) {
-        res.status(400).send("Error : " + err);
-    }
-
-});
 
 
-app.get("/login", async (req, res) => {
-    const { emailId, password } = req.body;
-
-    try {
-        // Check email in db
-        const user = await User.findOne({ emailId: emailId });
-
-        if (!user) {
-            throw new Error("Invalid credentials");
-        }
-
-        // Compare password using the schema method
-        const isPasswordCorrect = await user.validatePassword(password);
-
-        if (!isPasswordCorrect) {
-            throw new Error("Invalid credentials");
-        }
-
-        // Generate JWT token using user method
-        const jwtToken = user.getJWT();
-
-        res.cookie("token", jwtToken);
-        res.send("Login successfully");
-
-    } catch (err) {
-        res.status(400).send("Error: " + err.message);
-    }
-});
+app.use("/", authRouter)
 
 
 app.get("/profile", async (req, res) => {
