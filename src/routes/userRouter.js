@@ -19,11 +19,13 @@ userRouter.delete("/user", async (req, res) => {
     const userId = req.body._id
     try {
         const user = await User.findByIdAndDelete(userId);
-        res.send("User deleted successfully");  
+        res.send("User deleted successfully");
     } catch (err) {
         res.status(500).send("Something went wrong, whene deleting user", err.message)
     }
     
-})
+});
+
+
 
 module.exports = userRouter;
