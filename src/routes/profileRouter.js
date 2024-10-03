@@ -2,6 +2,7 @@ const express = require("express");
 const profileRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const bcrypt = require("bcrypt");
 
 profileRouter.get("/profile", async (req, res) => {
     const { token } = req.cookies;
@@ -81,6 +82,38 @@ profileRouter.patch("/user/update", async (req, res) => {
         res.send(`Hey ${user.firstName} your frofile updated successfully`);
     } catch (err) {
         res.status(500).send("Something went wrong while updating user: " + err.message);
+    }
+});
+
+profileRouter.patch("/user/password/reset", async (req, res) => {
+
+    //Take email, firstName, Last name, new password from body
+    //search user by email in db
+    //conform user email, firstName, Last name should be matched from db
+    // hash new password and update in db
+    
+    const { firstName, lastName, emailId, newPassword } = req.body;
+    try {
+        const user = await User.findOne({ emailId: emailId });
+
+        if (!user) {
+            throw new Error("User not found Please insert correct details");
+        }
+
+        if (firstName !== user.firstName || lastName !== user.lastName) {
+            throw new Error("User not found Please insert correct details");
+        }
+
+        const hashPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashPassword;
+
+        await user.save();
+        
+        res.send("Password updated successfully")
+
+        
+    } catch (err) {
+        res.status(500).send("Something went wrong while updating password : " + err.message);
     }
 });
 
