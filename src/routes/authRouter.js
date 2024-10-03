@@ -6,6 +6,7 @@ const { validateSignupData } = require("../helper/auth");
 
 
 
+
 authRouter.post("/signup", async (req, res) => {
 
     const { firstName, lastName, emailId, password } = req.body;
@@ -56,7 +57,7 @@ authRouter.get("/login", async (req, res) => {
         }
 
         // Generate JWT token using user method
-        const jwtToken = user.getJWT();
+        const jwtToken = user.getJWT();     
 
         res.cookie("token", jwtToken);
         res.send("Login successfully");

@@ -47,29 +47,42 @@ profileRouter.get("/user/first", async (req, res) => {
 });
 
 profileRouter.patch("/user/update", async (req, res) => {
-    const userId = req.body._id;
     const data = req.body;    
+    const { token } = req.cookies;
     try {
-        const UPDATE_ALLOWED = ["firstName", "lastName", "about", "photoUrl","skills"];
+        const UPDATE_ALLOWED = ["firstName", "lastName", "about", "photoUrl", "skills"];
         const isDataAllowed = Object.keys(data).every((k) => UPDATE_ALLOWED.includes(k));
         
         if (!isDataAllowed) {
-            throw new Error("Upadte not allowed");
+            throw new Error("Update not allowed");
         }
-        if (data?.skills.length > 10) {
+
+        if (data?.skills && data.skills.length > 10) {
             throw new Error("Skills cannot be more than 10");
         }
-        if (data?.about.length > 256) {
+
+        if (data?.about && data.about.length > 256) {
             throw new Error("About length cannot be more than 256");
         }
-        const user = await User.findByIdAndUpdate(userId, data, { returnDocument: 'after', runValidators: true });   
-        console.log(user);
-        
-        await user.save();
-        res.send(user);
+
+        // Find Update the user
+        const userId = jwt.verify(token, "MybestFriend123123@");
+
+        const user = await User.findByIdAndUpdate(
+            userId, 
+            data, 
+            { returnDocument: 'after', runValidators: true }
+        );   
+
+        if (!user) {
+            return res.status(404).send("User not found");
+        }
+
+        res.send(`Hey ${user.firstName} your frofile updated successfully`);
     } catch (err) {
-        res.status(500).send("Something went wrong, whene updating user " + err.message)
+        res.status(500).send("Something went wrong while updating user: " + err.message);
     }
-})
+});
+
 
 module.exports = profileRouter;
