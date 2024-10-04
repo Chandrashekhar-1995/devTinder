@@ -117,5 +117,37 @@ profileRouter.patch("/user/password/reset", async (req, res) => {
     }
 });
 
+profileRouter.patch("/user/password/change", async (req, res) => {
+    //Take email, old password, new password from body
+    //search user by email in db
+    //conform user email, firstName, Last name should be matched from db
+    // hash new password and update in db
+    const { oldPassword, emailId, newPassword } = req.body;
+    try {
+        const user = await User.findOne({ emailId: emailId });
+
+        if (!user) {
+            throw new Error("User not found Please insert correct details");
+        }
+
+        const isPasswordCorrect = await user.validatePassword(oldPassword);
+
+        if (!isPasswordCorrect) {
+            throw new Error("Wrong Old password please insert correct password");
+        }
+
+        const hashPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashPassword;
+
+        await user.save();
+        
+        res.send("Password updated successfully")
+        
+    } catch (error) {
+        res.status(500).send("Something went wrong while changing password : " + err.message);
+    }
+
+})
+
 
 module.exports = profileRouter;
