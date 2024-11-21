@@ -1,5 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
+const User = require("../models/user.model");
 
 
 userRouter.get("/user/feed", async (req, res) => {
