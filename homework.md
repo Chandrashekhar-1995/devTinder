@@ -111,3 +111,10 @@
 - Create PATCH /profile/edit API
 - Create PATCH /profile/password API => forgate password API
 - Make you validate all data in every POST, PATCH APIs
+
+# Episode 12 homework
+
+- Read more about indexes in mongoDB
+- Why we do need indexes i DB?
+- What is advantage and Disadvantage of creating indexing ?
+- Rerad about compound indexes from https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
