@@ -114,7 +114,13 @@
 
 # Episode 12 homework
 
+- Create connection Request Schema
+- Send Connection request API
+- Proper validation of Data
+- Think About all coner cases
+- $or query &and query in mongoDB
+- schema.pre("save") function
 - Read more about indexes in mongoDB
-- Why we do need indexes i DB?
+- Why we do need indexes in DB?
 - What is advantage and Disadvantage of creating indexing ?
 - Rerad about compound indexes from https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
