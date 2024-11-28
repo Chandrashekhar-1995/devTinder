@@ -52,4 +52,42 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async(req, res) 
     }
 })
 
+
+
+
+requestRouter.post("/request/review/:status/:requestId", userAuth, async(req,res)=>{
+    try {
+        const loginUserId = req.user._id;
+        const urlStatus = req.params.status;
+        const urlRequestId = req.params.requestId;
+
+        // url status = accepted/rejected
+        // RequestId available in db
+        // login userId = toUserId
+        // request id status = intrested
+
+        
+        const allowedStatus  = ["accepted", "rejected"];
+        if(!allowedStatus.includes(urlStatus)){
+            return res.status(400).json({message: "invalid status type " + urlStatus})
+        };
+
+        // Find the request by ID
+        const requestId = await ConnectionRequest.findById(urlRequestId);
+        if (!requestId) { 
+            return res.status(404).json({ message: "Connection not found" });
+        }
+
+        if(!loginUserId.equals(requestId.toUserIf)){
+            return res.status(400).json({ message: "User mismach" });
+        }
+
+
+        res.send("Request processed successfully");
+
+    } catch (err) {
+        res.status(400).send("Error: " + err.message);
+    }
+});
+
 module.exports = requestRouter;

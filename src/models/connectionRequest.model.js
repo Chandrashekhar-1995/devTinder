@@ -33,7 +33,7 @@ connectionRequestSchema.pre("save", function(next){
     //check fromUserId is same as toUserId
     if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
         throw new Error("Can't send connection request to yourself !")
-    }
+    } 
     next();
 });
 
