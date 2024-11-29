@@ -78,7 +78,7 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async(req,res
             return res.status(404).json({ message: "Connection not found" });
         }
 
-        if(!loginUserId.equals(requestId.toUserIf)){
+        if(!loginUserId.equals(requestId.toUserId)){
             return res.status(400).json({ message: "User mismach" });
         }
 
