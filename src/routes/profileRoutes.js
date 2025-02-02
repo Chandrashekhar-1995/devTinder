@@ -13,7 +13,7 @@ profileRouter.get("/profile", async (req, res) => {
         const user = await User.findOne({ _id: userId });
         res.send(user)
     } catch (err) {
-        res.send("Please login again!!                  Error: " + err);
+        res.send("Please login again!!     Error: " + err);
     }
 });
 
@@ -33,19 +33,6 @@ profileRouter.get("/user", async (req, res) => {
     }
 });
 
-profileRouter.get("/user/first", async (req, res) => {
-    const userEmail = req.body.emailId;
-    try {
-        const user = await User.findOne({ emailId: userEmail })
-        if (!user) {
-            res.status(404).send("User not found");
-        } else {
-            res.send(user);
-        }
-    } catch (err) {
-        res.status(400).send("Something went wrong, whene finding the user by email", err.message)
-    }
-});
 
 profileRouter.patch("/user/update", async (req, res) => {
     const data = req.body;    

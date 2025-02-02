@@ -76,12 +76,21 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async(req,res
         const requestId = await ConnectionRequest.findById(urlRequestId);
         if (!requestId) { 
             return res.status(404).json({ message: "Connection not found" });
-        }
+        };
 
         if(!loginUserId.equals(requestId.toUserId)){
             return res.status(400).json({ message: "User mismach" });
-        }
+        };
 
+        if (requestId.status !== "intrested"){
+            return res.status(400).json({ message: "Sender not intrested in you" });
+        }; 
+
+        const connectionRequest = ConnectionRequest({
+            status:urlStatus
+        });
+
+        await connectionRequest.save();
 
         res.send("Request processed successfully");
 
